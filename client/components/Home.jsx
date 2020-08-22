@@ -27,7 +27,7 @@ const App = () => {
     fetch(`api/v1/${routes[0]}`)
       .then(res => { return res.json() })
       .then(json => {
-        console.log("Response found for route");
+        // console.log("Response found for route");
         const services = json.Services;
         showOrderedServices(services);
       });
@@ -36,7 +36,7 @@ const App = () => {
 
 
   const startTripClicked = (e) => {
-    console.log("Start Trip Clicked!");
+    // console.log("Start Trip Clicked!");
     let startTime = Date.now();
 
     let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
@@ -64,7 +64,7 @@ const App = () => {
 
   const serviceIdChanged = (event) => {
     const service = JSON.parse(event.target.value);
-    console.log("Service: ", service);
+    // console.log("Service: ", service);
     setVehicleRef(service.VehicleRef);
   }
 
@@ -75,8 +75,8 @@ const App = () => {
       services = services.sort((serviceA, serviceB) => {
         serviceA.distance = Utils.getDistanceFromLatLonInKm(serviceA.Lat, serviceA.Long, currentPosition.latitude, currentPosition.longitude);
         serviceB.distance = Utils.getDistanceFromLatLonInKm(serviceB.Lat, serviceB.Long, currentPosition.latitude, currentPosition.longitude);
-        console.log("serviceA distance:", serviceA.distance);
-        console.log("serviceB distance:", serviceB.distance);
+        // console.log("serviceA distance:", serviceA.distance);
+        // console.log("serviceB distance:", serviceB.distance);
         return serviceA.distance - serviceB.distance;
       });
 
