@@ -7,7 +7,6 @@ const App = () => {
       startTime: Date.now(),
       route: 22
     }
-
   }
  
   // Save
