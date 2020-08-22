@@ -5,11 +5,14 @@ import Data from "./../classes/Data";
 const App = () => {
   const [route, setRoute] = useState({});
   const [data, setData] = useState(Data.load());
+  const [vehicleRef, setVehicleRef] = useState();
+
 
   const startTripClicked = (e) => {
     console.log("Start Trip Clicked!");
     let startTime = Date.now();
-    let trip = new Trip(route, startTime);
+
+    let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
     data.addTrip(trip);
   }
 
@@ -27,8 +30,56 @@ const App = () => {
     "N1", "N2", "N22", "N3", "N4", "N5", "N6", "N66", "N8", "N88", "WHF", "WRL"]
 
   const routeIdChanged = (event) => {
-    console.log("Route Id Changed: ", event);
-    setRoute(event.target.value);
+    // console.log("Route Id Changed: ");
+    const route = event.target.value;
+    setRoute(route);
+
+    /* Example
+    {
+    "LastModified": "2020-08-22T17:02:38+12:00",
+    "Services": [
+        {
+            "RecordedAtTime": "2020-08-22T17:02:35+12:00",
+            "VehicleRef": "2098",
+            "ServiceID": "22",
+            "HasStarted": true,
+            "DepartureTime": "2020-08-22T17:00:00+12:00",
+            "OriginStopID": "4936",
+            "OriginStopName": "Mairangi-NorwichSt",
+            "DestinationStopID": "5016",
+            "DestinationStopName": "WgtnStn-D",
+            "Direction": "Inbound",
+            "Bearing": "216",
+            "BehindSchedule": true,
+            "VehicleFeature": "lowFloor",
+            "DelaySeconds": 35,
+            "Lat": "-41.2671585",
+            "Long": "174.7662506",
+            "Service": {
+                "Code": "22",
+                "TrimmedCode": "22",
+                "Name": "Johnsonville - Mairangi - Kelburn - Wellington",
+                "Mode": "Bus",
+                "Link": "/timetables/bus/22"
+            }
+        }
+    ]
+}
+    */
+    fetch(`api/v1/${route}`)
+      .then(res => { return res.json() })
+      .then(json => {
+        const services = json.Services;
+        //setVehicleRef(json.Services.VehicleRef);
+        setMyMatchingVehicle(services);
+      });
+  }
+
+  const setMyMatchingVehicle = (services) => {
+    // TO DO ------ Must select the correct vehicle
+    const matchedService = services[0];
+
+    setVehicleRef(matchedService.VehicleRef);
   }
 
   return (

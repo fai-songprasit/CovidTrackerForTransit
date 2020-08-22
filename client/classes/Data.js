@@ -18,7 +18,7 @@ class Data {
         console.log("loadTripsFromJson: ");
         tripsJson.forEach(tripJson => {
             console.log("tripJson: ", tripJson);
-            const trip = new Trip(tripJson.route, tripJson.startTime, tripJson.endTime);
+            const trip = new Trip(tripJson.route, tripJson.startTime, tripJson.endTime, tripJson.vehicleRef );
             trips.push(trip);
         });
         return trips;
@@ -41,11 +41,6 @@ class Data {
         return this.loadDataFromLocalStorage();
     }
 
-    // static save = (data) => {
-    //     const dataCopy = new Data(data.trips, data.covidPositive);
-    //     const dataString = JSON.stringify(dataCopy);
-    //     window.localStorage.setItem("data", dataString);
-    // }
     save = ()=>{
         const dataCopy = new Data(this.trips, this.covidPositive);
         const dataString = JSON.stringify(dataCopy);
@@ -61,10 +56,9 @@ class Data {
     }
 
     addTrip = (trip) => {
-        console.log("this: ", this);
+        // console.log("this: ", this);
+        console.log("trip: ", trip);
         this.trips.push(trip);
-        // const dataCopy = new Data(this.trips, this.covidPositive);
-        // Data.save(dataCopy);
         this.save();
     }
 
@@ -75,7 +69,7 @@ class Data {
         }
     
         console.log("Get current trip - currentTrip: ", currentTrip);
-        if (currentTrip.getEndTime() === Trip.defaultEndTime(currentTrip.startTime)) {
+        if (currentTrip.getEndTime() === Trip.getDefaultEndTime(currentTrip.startTime)) {
             return currentTrip;
         }
         return null;
@@ -92,9 +86,6 @@ class Data {
 
         currentTrip.setEndTime(Date.now());
         console.log("currentTrip: ", currentTrip);
-        // const dataCopy = new Data(this.trips, this.covidPositive);
-        // Data.save(dataCopy);
-        // Data.save();
         this.save();
     }
 }
