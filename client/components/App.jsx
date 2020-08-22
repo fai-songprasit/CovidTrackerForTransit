@@ -1,143 +1,48 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
+import Trip from "./../classes/Trip";
+import Data from "./../classes/Data";
 
 const App = () => {
-  const startTripClicked = (e)=>{
+  const [route, setRoute] = useState({});
+  const [data, setData] = useState(Data.load());
+
+  const startTripClicked = (e) => {
     console.log("Start Trip Clicked!");
-    const trip = {
-      startTime: Date.now(),
-      route: 22
-    }
-  }
- 
-  // Save
-  save = (dataToSave) => {
-    const dataString = JSON.stringify(dataToSave);
-    window.localStorage.setItem("data", dataString);
+    let startTime = Date.now();
+    let trip = new Trip(route, startTime);
+    data.addTrip(trip);
   }
 
-  load = () => {
-    const dataJsonString = window.localStorage.getItem("data");
-    return JSON.parse(dataJsonString);
+  const endTripClicked = () => {
+    data.endCurrentTrip();
   }
 
-  const routeNameChanged = (e)=>{
-    console.log("Route name changed");
-  }
+  const routes = ["1", "110", "111", "112", "113", "114", "115", "12",
+    "120", "121", "12e", "13", "130", "14", "145", "150", "154", "160", "17",
+    "170", "17e", "18", "18e", "19", "19e", "2", "20", "200", "201", "202", "203", "204",
+    "206", "21", "210", "22", "220", "226", "23", "230", "236", "23e", "23z", "24", "25",
+    "250", "251", "26", "260", "261", "262", "264", "27", "28", "280", "281", "29", "290",
+    "291", "29e", "3", "300", "30x", "31x", "32x", "33", "34", "35", "36", "37", "52", "56",
+    "57", "58", "60", "60e", "7", "81", "83", "84", "85x", "CCL", "HVL", "JVL", "KPL", "MEL",
+    "N1", "N2", "N22", "N3", "N4", "N5", "N6", "N66", "N8", "N88", "WHF", "WRL"]
 
-  const endTripClicked = (e)=>{
-    console.log("End Trip Clicked!");
+  const routeIdChanged = (event) => {
+    console.log("Route Id Changed: ", event);
+    setRoute(event.target.value);
   }
-
-  const routes = [
-      "203",
-      "170",
-      "WHF",
-      "58",
-      "29",
-      "145",
-      "201",
-      "251",
-      "52",
-      "33",
-      "N22",
-      "N1",
-      "202",
-      "226",
-      "22",
-      "36",
-      "CCL",
-      "57",
-      "114",
-      "N88",
-      "27",
-      "121",
-      "18e",
-      "KPL",
-      "19",
-      "111",
-      "83",
-      "N5",
-      "WRL",
-      "N8",
-      "1",
-      "N4",
-      "19e",
-      "18",
-      "JVL",
-      "N6",
-      "120",
-      "210",
-      "23",
-      "160",
-      "84",
-      "154",
-      "204",
-      "81",
-      "206",
-      "60",
-      "115",
-      "264",
-      "300",
-      "3",
-      "N66",
-      "112",
-      "85x",
-      "2",
-      "200",
-      "23e",
-      "23z",
-      "291",
-      "29e",
-      "26",
-      "17e",
-      "25",
-      "230",
-      "28",
-      "261",
-      "14",
-      "HVL",
-      "MEL",
-      "130",
-      "250",
-      "24",
-      "150",
-      "31x",
-      "N3",
-      "32x",
-      "260",
-      "17",
-      "60e",
-      "281",
-      "12",
-      "12e",
-      "220",
-      "34",
-      "110",
-      "290",
-      "56",
-      "113",
-      "30x",
-      "21",
-      "236",
-      "35",
-      "37",
-      "20",
-      "13",
-      "262",
-      "7",
-      "280",
-      "N2"
-    ]
 
   return (
     <div>
       <h1>COVID Tracker For Transit</h1>
-      <button onClick={startTripClicked}>Start Trip</button>
-      <input id="routeName" onChange={routeNameChanged}></input>
-      <select id="routes">
-        {routes}
-        <option value></option>
+      <select id="routeId" onChange={routeIdChanged}>
+        {routes.map((route, key) => {
+          return (
+            <option key={key} value={route}>{route}</option>
+          )
+        })}
       </select>
+      <button onClick={startTripClicked}>Start Trip</button>
+
       <button onClick={endTripClicked}>End Trip</button>
     </div>
   )
