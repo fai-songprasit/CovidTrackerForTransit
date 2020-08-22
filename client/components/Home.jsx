@@ -2,21 +2,14 @@ import React, { useState, useEffect } from "react"
 
 import Trip from "./../classes/Trip";
 import Data from "./../classes/Data";
+import Utils from "./../classes/Utils";
 
 const App = () => {
   const [route, setRoute] = useState({});
   const [data, setData] = useState(Data.load());
+  const [vehicleRef, setVehicleRef] = useState();
+  const [servicesList, setServicesList] = useState([]);
 
-  const startTripClicked = (e) => {
-    console.log("Start Trip Clicked!");
-    let startTime = Date.now();
-    let trip = new Trip(route, startTime);
-    data.addTrip(trip);
-  }
-
-  const endTripClicked = () => {
-    data.endCurrentTrip();
-  }
 
   const routes = ["1", "110", "111", "112", "113", "114", "115", "12",
     "120", "121", "12e", "13", "130", "14", "145", "150", "154", "160", "17",
@@ -27,9 +20,73 @@ const App = () => {
     "57", "58", "60", "60e", "7", "81", "83", "84", "85x", "CCL", "HVL", "JVL", "KPL", "MEL",
     "N1", "N2", "N22", "N3", "N4", "N5", "N6", "N66", "N8", "N88", "WHF", "WRL"]
 
+  useEffect(() => {
+    //console.log("Use Effect Trigger!");
+    setRoute(routes[0]);
+
+    fetch(`api/v1/${routes[0]}`)
+      .then(res => { return res.json() })
+      .then(json => {
+        console.log("Response found for route");
+        const services = json.Services;
+        showOrderedServices(services);
+      });
+  }, []);
+
+
+
+  const startTripClicked = (e) => {
+    console.log("Start Trip Clicked!");
+    let startTime = Date.now();
+
+    let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
+    data.addTrip(trip);
+  }
+
+  const endTripClicked = () => {
+    data.endCurrentTrip();
+  }
+
+
   const routeIdChanged = (event) => {
-    console.log("Route Id Changed: ", event);
-    setRoute(event.target.value);
+    // console.log("Route Id Changed: ");
+    const route = event.target.value;
+    setRoute(route);
+
+    fetch(`api/v1/${route}`)
+      .then(res => { return res.json() })
+      .then(json => {
+        const services = json.Services;
+        showOrderedServices(services);
+      });
+  }
+
+
+  const serviceIdChanged = (event) => {
+    const service = event.target.value;
+    console.log("Service: ", service);
+    setVehicleRef(service.VehicleRef);
+  }
+
+
+  const showOrderedServices = (services) => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const currentPosition = position.coords;
+      services = services.sort((serviceA, serviceB) => {
+        serviceA.distance = Utils.getDistanceFromLatLonInKm(serviceA.Lat, serviceA.Long, currentPosition.latitude, currentPosition.longitude);
+        serviceB.distance = Utils.getDistanceFromLatLonInKm(serviceB.Lat, serviceB.Long, currentPosition.latitude, currentPosition.longitude);
+        console.log("serviceA distance:", serviceA.distance);
+        console.log("serviceB distance:", serviceB.distance);
+        return serviceA.distance - serviceB.distance;
+      });
+
+      let vehicleRef = null;
+      if (services.length > 0) {
+        vehicleRef = services[0].VehicleRef;
+      }
+      setVehicleRef(vehicleRef);
+      setServicesList(services);
+    });
   }
 
   return (
@@ -42,7 +99,20 @@ const App = () => {
           )
         })}
       </select>
+
+      {route != null && servicesList.length > 0 &&
+        <select id="serviceId" onChange={serviceIdChanged}>
+
+          {servicesList.map((service, key) => {
+            return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name} ({(service.distance) ? service.distance.toFixed(2) : "Unknown" } km away) </option>)
+          })}
+
+        </select>
+      }
+
       <button onClick={startTripClicked}>Start Trip</button>
+
+      
 
       <button onClick={endTripClicked}>End Trip</button>
     </div>
