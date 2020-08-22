@@ -6,11 +6,14 @@ import Data from "./../classes/Data";
 const App = () => {
   const [route, setRoute] = useState({});
   const [data, setData] = useState(Data.load());
+  const [vehicleRef, setVehicleRef] = useState();
+
 
   const startTripClicked = (e) => {
     console.log("Start Trip Clicked!");
     let startTime = Date.now();
-    let trip = new Trip(route, startTime);
+
+    let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
     data.addTrip(trip);
   }
 
@@ -28,8 +31,23 @@ const App = () => {
     "N1", "N2", "N22", "N3", "N4", "N5", "N6", "N66", "N8", "N88", "WHF", "WRL"]
 
   const routeIdChanged = (event) => {
-    console.log("Route Id Changed: ", event);
-    setRoute(event.target.value);
+    // console.log("Route Id Changed: ");
+    const route = event.target.value;
+    setRoute(route);
+    fetch(`api/v1/${route}`)
+      .then(res => { return res.json() })
+      .then(json => {
+        const services = json.Services;
+        //setVehicleRef(json.Services.VehicleRef);
+        setMyMatchingVehicle(services);
+      });
+  }
+
+  const setMyMatchingVehicle = (services) => {
+    // TO DO ------ Must select the correct vehicle
+    const matchedService = services[0];
+
+    setVehicleRef(matchedService.VehicleRef);
   }
 
   return (
