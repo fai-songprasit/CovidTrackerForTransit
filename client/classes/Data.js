@@ -26,7 +26,9 @@ class Data {
     }
 
     static loadDataFromLocalStorage = () => {
-        let loadedData = window.localStorage.getItem("data");
+        let loadedDataString = window.localStorage.getItem("data");
+        let loadedDataJson = JSON.parse(loadedDataString);
+        let loadedData = Data.loadDataFromJson(loadedDataJson);
         console.log("loadedData: ", loadedData);
         if(loadedData === null){
             loadedData = {
@@ -34,12 +36,16 @@ class Data {
                 covidPositive: false    
             };
         }
+        console.log("loadedData.trips: " , loadedData.trips);
         const data = new Data(loadedData.trips, loadedData.covidPositive);
+        // console.log("Loaded Data: ", loadedData);
         return data;
     }
 
     static load = () => {
-        return this.loadDataFromLocalStorage();
+        const data = this.loadDataFromLocalStorage();
+        console.log("Loaded Data: ", data);
+        return data;
     }
 
     save = ()=>{
@@ -60,6 +66,7 @@ class Data {
         // console.log("this: ", this);
         console.log("trip: ", trip);
         this.trips.push(trip);
+        console.log("this.trips: ", this.trips);
         this.save();
     }
 
