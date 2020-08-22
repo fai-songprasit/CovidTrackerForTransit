@@ -128,9 +128,6 @@ const App = () => {
       "280",
       "N2"
     ]
-    
-
-  
 
   return (
     <div>
