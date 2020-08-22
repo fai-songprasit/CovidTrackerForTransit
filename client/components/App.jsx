@@ -31,7 +31,6 @@ const App = () => {
     setRoute(event.target.value);
   }
 
-
   return (
     <div>
       <h1>COVID Tracker For Transit</h1>
