@@ -16,37 +16,37 @@ class Data {
 
     static loadTripsFromJson = (tripsJson) => {
         let trips = [];
-        console.log("loadTripsFromJson: ");
+        // console.log("loadTripsFromJson: ");
         tripsJson.forEach(tripJson => {
-            console.log("tripJson: ", tripJson);
-            const trip = new Trip(tripJson.route, tripJson.startTime, tripJson.endTime);
+            // console.log("tripJson: ", tripJson);
+            const trip = new Trip(tripJson.route, tripJson.startTime, tripJson.endTime, tripJson.vehicleRef );
             trips.push(trip);
         });
         return trips;
     }
 
     static loadDataFromLocalStorage = () => {
-        let loadedData = window.localStorage.getItem("data");
-        console.log("loadedData: ", loadedData);
+        let loadedDataString = window.localStorage.getItem("data");
+        let loadedDataJson = JSON.parse(loadedDataString);
+        let loadedData = Data.loadDataFromJson(loadedDataJson);
+        // console.log("loadedData: ", loadedData);
         if(loadedData === null){
             loadedData = {
                 trips: [],
                 covidPositive: false    
             };
         }
+        // console.log("loadedData.trips: " , loadedData.trips);
         const data = new Data(loadedData.trips, loadedData.covidPositive);
+        // console.log("Loaded Data: ", loadedData);
         return data;
     }
 
     static load = () => {
-        return this.loadDataFromLocalStorage();
+        const data = this.loadDataFromLocalStorage();
+        // console.log("Loaded Data: ", data);
+        return data;
     }
-
-    // static save = (data) => {
-    //     const dataCopy = new Data(data.trips, data.covidPositive);
-    //     const dataString = JSON.stringify(dataCopy);
-    //     window.localStorage.setItem("data", dataString);
-    // }
 
     save = ()=>{
         const dataCopy = new Data(this.trips, this.covidPositive);
@@ -63,10 +63,10 @@ class Data {
     }
 
     addTrip = (trip) => {
-        console.log("this: ", this);
+        // console.log("this: ", this);
+        // console.log("trip: ", trip);
         this.trips.push(trip);
-        // const dataCopy = new Data(this.trips, this.covidPositive);
-        // Data.save(dataCopy);
+        // console.log("this.trips: ", this.trips);
         this.save();
     }
 
@@ -76,27 +76,24 @@ class Data {
             currentTrip = new Trip(currentTrip.route, currentTrip.startTime, currentTrip.endTime);
         }
     
-        console.log("Get current trip - currentTrip: ", currentTrip);
-        if (currentTrip.getEndTime() === Trip.defaultEndTime(currentTrip.startTime)) {
+        // console.log("Get current trip - currentTrip: ", currentTrip);
+        if (currentTrip.getEndTime() === Trip.getDefaultEndTime(currentTrip.startTime)) {
             return currentTrip;
         }
         return null;
     }
 
     endCurrentTrip = () => {
-        console.log("End current trip hit!");
+        // console.log("End current trip hit!");
         let currentTrip = this.getCurrentTrip();
-        console.log("currentTrip: ", currentTrip);
+        // console.log("currentTrip: ", currentTrip);
         if(currentTrip === null){
-            console.error("There is no current trip, unable to end current trip");
+            // console.error("There is no current trip, unable to end current trip");
             return;
         }
 
         currentTrip.setEndTime(Date.now());
-        console.log("currentTrip: ", currentTrip);
-        // const dataCopy = new Data(this.trips, this.covidPositive);
-        // Data.save(dataCopy);
-        // Data.save();
+        // console.log("currentTrip: ", currentTrip);
         this.save();
     }
 }

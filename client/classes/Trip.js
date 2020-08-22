@@ -1,12 +1,13 @@
 
 class Trip {
-    constructor(route, startTime, endTime = Trip.defaultEndTime(startTime)) {
+    constructor(route, startTime, endTime = Trip.getDefaultEndTime(startTime), vehicleRef) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.route = route;
+        this.vehicleRef = vehicleRef;
     }
 
-    static defaultEndTime = (startTime) => {
+    static getDefaultEndTime = (startTime) => {
         return null;
     }
 
@@ -16,6 +17,10 @@ class Trip {
 
     setEndTime(endTime) {
         this.endTime = endTime;
+    }
+
+    setVehicle(vehicleRef){
+        this.vehicleRef = vehicleRef;
     }
 
     overlaps(otherTrip) {
@@ -33,6 +38,9 @@ class Trip {
 
     sameAs(otherTrip) {
         if (this.route !== otherTrip.route) {
+            return false;
+        }
+        if (this.vehicleRef !== otherTrip.vehicleRef){
             return false;
         }
         if (this.startTime !== otherTrip.startTime) {
