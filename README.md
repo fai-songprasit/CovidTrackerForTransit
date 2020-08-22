@@ -63,5 +63,3 @@ COVID Tracker For Transit
 ### Process
 +	Is there evidence of an agile mindset & tools?
 +	How did the team work together?
-
-![alt text](https://drive.google.com/file/d/1wuraLy24iCLgEvevCARg1NR3jvrhgxAA/view)
