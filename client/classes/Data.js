@@ -1,4 +1,5 @@
 import Trip from "./Trip";
+
 class Data {
     constructor(trips = [], covidPositive = false) {
         this.trips = trips;
@@ -46,6 +47,7 @@ class Data {
     //     const dataString = JSON.stringify(dataCopy);
     //     window.localStorage.setItem("data", dataString);
     // }
+
     save = ()=>{
         const dataCopy = new Data(this.trips, this.covidPositive);
         const dataString = JSON.stringify(dataCopy);
