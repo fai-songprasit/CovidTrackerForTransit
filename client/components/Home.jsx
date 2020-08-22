@@ -63,7 +63,7 @@ const App = () => {
 
 
   const serviceIdChanged = (event) => {
-    const service = event.target.value;
+    const service = JSON.parse(event.target.value);
     console.log("Service: ", service);
     setVehicleRef(service.VehicleRef);
   }
