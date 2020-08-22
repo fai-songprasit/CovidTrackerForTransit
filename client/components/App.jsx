@@ -1,8 +1,25 @@
-import React from 'react'
+import React from "react"
 
 const App = () => {
+  const startTripClicked = (e)=>{
+    console.log("Start Trip Clicked!");
+  }
+
+  const routeNameChanged = (e)=>{
+    console.log("Route name changed");
+  }
+
+  const endTripClicked = (e)=>{
+    console.log("End Trip Clicked!");
+  }
+
   return (
-    <h1>React development has begun!</h1>
+    <div>
+      <h1>COVID Tracker For Transit</h1>
+      <button onClick={startTripClicked}>Start Trip</button>
+      <input id="routeName" onChange={routeNameChanged}></input>
+      <button onClick={endTripClicked}>End Trip</button>
+    </div>
   )
 }
 
