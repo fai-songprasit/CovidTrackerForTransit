@@ -1,4 +1,5 @@
 import Trip from "./Trip";
+
 class Data {
     constructor(trips = [], covidPositive = false) {
         this.trips = trips;
