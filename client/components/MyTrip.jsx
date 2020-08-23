@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 
 import Data from "./../classes/Data";
-
-const MyTrip = (props) => {
+import Trip from "./Trip";
+const MyTrips = (props) => {
 
     const [data, setData] = useState(Data.load());
     //console.log(data.trips)
@@ -21,41 +21,25 @@ const MyTrip = (props) => {
     }
 
     trips = trips.slice(0, maxTrips);
+    trips = trips.sort((tripA, tripB) => {
+        return tripB.startTime - tripA.startTime;
+    });
 
     return (
-        <>
+        <div className="container">
             <h2>Trip History</h2>
 
             {trips.map((trip, key) => {
-                const startDate   = new Date(trip.startTime);
-                const endDate     = new Date(trip.endTime);
-                const displayDate = `${startDate.getDate()}/${startDate.getMonth() +1 }/${startDate.getFullYear()}` ;
-
-                const displayStartTime = `${startDate.getHours()}:${startDate.getMinutes() }` ;
-                const displayEndTime = `${endDate.getHours()}:${endDate.getMinutes() }`;
-
+               
                 return (
-                    <div key={key}>
-                        <div>
-                            <b>{displayDate} - Route {trip.route}</b>
-                        </div>
-
-                        <div>
-                            <label>Start Time:</label>{displayStartTime}
-                        </div>
-                        <div>
-                            <label>End Time: </label>{displayEndTime}
-                        </div>
-
-                        <div>
-                            <label>Vehicle Reference: </label> {trip.vehicleRef}
-                        </div>
+                    <div key={key} >
+                        <Trip trip={trip}/>
                         <br />
                     </div>
                 )
             })}
-        </>
+        </div>
     )
 }
 
-export default MyTrip
+export default MyTrips

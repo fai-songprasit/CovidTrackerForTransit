@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import MyTrip from "./MyTrip.jsx";
+import MyTrips from "./MyTrip.jsx";
 
 import Trip from "./../classes/Trip";
 import Data from "./../classes/Data";
@@ -44,6 +44,7 @@ const App = () => {
 
   const endTripClicked = () => {
     data.endCurrentTrip();
+    location.reload();
   }
 
   const routeIdChanged = (event) => {
@@ -86,33 +87,45 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>COVID Tracker For Transit</h1>
-      <div className="centering"><select className="button button-route" id="routeId" onChange={routeIdChanged}>
-
-        {routes.map((route, key) => {
-          return (
-            <option key={key} value={route}>{route}</option>
-          )
-        })}
-      </select>
-
-      {route != null && servicesList.length > 0 &&
-        <select id="serviceId" onChange={serviceIdChanged}>
-
-          {servicesList.map((service, key) => {
-            return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name} ({(service.distance) ? service.distance.toFixed(2) : "Unknown" } km away) </option>)
+      <div className="row">
+        <label className="col-3">Route</label>
+        {/* <div className="centering col-6"> */}
+        <select className="button button-route col-9" id="routeId" onChange={routeIdChanged}>
+          {routes.map((route, key) => {
+            return (
+              <option key={key} value={route}>{route}</option>
+            )
           })}
-
         </select>
-      }
-
-      <button className="button button-start" onClick={startTripClicked}>Start Trip</button>
-
-      <button className="button button-end" onClick={endTripClicked}>End Trip</button>
-      <MyTrip/>
+        {/* </div> */}
       </div>
+
+      <div className="row">
+        {route != null && servicesList.length > 0 &&
+          <select id="serviceId" className="col-12" onChange={serviceIdChanged}>
+
+            {servicesList.map((service, key) => {
+              return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name.substr(0, 16)}... ({(service.distance) ? service.distance.toFixed(2) : "Unknown"} km away) </option>)
+            })}
+
+          </select>
+        }
+      </div>
+      <br />
+      <div className="row">
+        <button type="button" className="button button-start btn-primary btn-block" onClick={startTripClicked}>Start Trip</button>
+
+        <button type="button" className="button button-end btn-primary btn-block" onClick={endTripClicked}>End Trip</button>
+      </div>
+      <br />
+      <br />
+
+      <MyTrips />
+
     </div>
+
   )
 }
 
