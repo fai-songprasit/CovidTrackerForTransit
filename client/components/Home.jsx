@@ -12,7 +12,6 @@ const App = () => {
   const [vehicleRef, setVehicleRef] = useState();
   const [servicesList, setServicesList] = useState([]);
 
-
   const routes = ["1", "110", "111", "112", "113", "114", "115", "12",
     "120", "121", "12e", "13", "130", "14", "145", "150", "154", "160", "17",
     "170", "17e", "18", "18e", "19", "19e", "2", "20", "200", "201", "202", "203", "204",
@@ -35,8 +34,6 @@ const App = () => {
       });
   }, []);
 
-
-
   const startTripClicked = (e) => {
     // console.log("Start Trip Clicked!");
     let startTime = Date.now();
@@ -48,7 +45,6 @@ const App = () => {
   const endTripClicked = () => {
     data.endCurrentTrip();
   }
-
 
   const routeIdChanged = (event) => {
     // console.log("Route Id Changed: ");
@@ -63,13 +59,11 @@ const App = () => {
       });
   }
 
-
   const serviceIdChanged = (event) => {
     const service = JSON.parse(event.target.value);
     // console.log("Service: ", service);
     setVehicleRef(service.VehicleRef);
   }
-
 
   const showOrderedServices = (services) => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -94,7 +88,8 @@ const App = () => {
   return (
     <div>
       <h1>COVID Tracker For Transit</h1>
-      <select id="routeId" onChange={routeIdChanged}>
+      <div className="centering"><select className="button button-route" id="routeId" onChange={routeIdChanged}>
+
         {routes.map((route, key) => {
           return (
             <option key={key} value={route}>{route}</option>
@@ -112,10 +107,11 @@ const App = () => {
         </select>
       }
 
-      <button onClick={startTripClicked}>Start Trip</button>
-      <button onClick={endTripClicked}>End Trip</button>
+      <button className="button button-start" onClick={startTripClicked}>Start Trip</button>
 
-      <MyTrip numberOfElements={5} />
+      <button className="button button-end" onClick={endTripClicked}>End Trip</button>
+      <MyTrip/>
+      </div>
     </div>
   )
 }
