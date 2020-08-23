@@ -27,7 +27,7 @@ const App = () => {
     fetch(`api/v1/serviceId/${routes[0]}`)
       .then(res => { return res.json() })
       .then(json => {
-        console.log("Response found for route");
+        // console.log("Response found for route");
         const services = json.Services;
         showOrderedServices(services);
       });
@@ -36,7 +36,7 @@ const App = () => {
 
 
   const startTripClicked = (e) => {
-    console.log("Start Trip Clicked!");
+    // console.log("Start Trip Clicked!");
     let startTime = Date.now();
 
     let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
