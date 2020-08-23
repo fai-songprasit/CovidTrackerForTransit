@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { HashRouter as Router, Route } from 'react-router-dom'
 import socketIoClient from 'socket.io-client';
 
+
+// Classes
 import {Data, Trip} from "./../classes";
 
 import Home from "./Home.jsx"
@@ -10,10 +12,10 @@ import Nav from "./Nav.jsx";
 import CovidPositiveBroadcast from "./CovidPositiveBroadcast.jsx";
 import CovidPositiveModal from "./CovidPositiveModal.jsx";
 
-const ENDPOINT = "localhost:3001";
 const App = () => {
   const [data, setData] = useState(Data.load());
-  const socket = socketIoClient(ENDPOINT);
+  const socket = socketIoClient();
+
   const [showPositiveContact, setShowPositiveContact] = useState();
 
   useEffect(() => {
