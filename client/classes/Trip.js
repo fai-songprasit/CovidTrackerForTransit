@@ -1,10 +1,12 @@
 
 class Trip {
-    constructor(route, startTime, endTime = Trip.getDefaultEndTime(startTime), vehicleRef) {
+    constructor(route, startTime, endTime = Trip.getDefaultEndTime(startTime), vehicleRef, startStop = null, endStop = null) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.route = route;
         this.vehicleRef = vehicleRef;
+        this.startStop = startStop;
+        this.endStop = endStop;
     }
 
     static getDefaultEndTime = (startTime) => {
@@ -17,6 +19,14 @@ class Trip {
 
     setEndTime(endTime) {
         this.endTime = endTime;
+    }
+
+    setStartStop(startStop){
+        this.startStop = startStop;
+    }
+
+    setEndStop(endStop){
+        this.endStop = endStop;
     }
 
     setVehicle(vehicleRef){
