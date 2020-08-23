@@ -14,16 +14,17 @@ const MyTrip = () => {
         <>
             <h2>Trip History</h2>
             {data.trips.map((trip, key) => {
-                const displayDate = new Date(trip.startTime).toDateString();
+                const startDate   = new Date(trip.startTime);
+                const endDate     = new Date(trip.endTime);
+                const displayDate = `${startDate.getDate()}/${startDate.getMonth() +1 }/${startDate.getFullYear()}` ;
 
-
-                const displayStartTime = new Date(trip.startTime).toDateString();
-                const displayEndTime = new Date(trip.startTime).toDateString();
+                const displayStartTime = `${startDate.getHours()}:${startDate.getMinutes() }` ;;
+                const displayEndTime = `${endDate.getHours()}:${endDate.getMinutes() }`
 
                 return (
                     <div key={key}>
                         <div>
-                            <b>{displayDate} -  {trip.route}</b>
+                            <b>{displayDate} - Route {trip.route}</b>
                         </div>
 
                         <div>
@@ -32,7 +33,7 @@ const MyTrip = () => {
                         <div>
                             <label>End Time: </label>{displayEndTime}
                         </div>
-                        
+
                         <div>
                             <label>Vehicle Reference: </label> {trip.vehicleRef}
                         </div>
