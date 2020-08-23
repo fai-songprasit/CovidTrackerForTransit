@@ -49,19 +49,49 @@ const App = () => {
       //https://www.metlink.org.nz/api/v1/StopNearby/[LAT]/[LONG]
       const busStopsNearUrl = `api/v1/StopNearby/${currentPosition.latitude}/${currentPosition.longitude}`;
       fetch(busStopsNearUrl)
-      .then( res => { return res.json()})
-      .then(stops => {
-        stops = stops.sort((stopA, stopB) => {
-          stopA.distance = Utils.getDistanceFromLatLonInKm(stopA.Lat, stopA.Long, currentPosition.latitude, currentPosition.longitude);
-          stopB.distance = Utils.getDistanceFromLatLonInKm(stopB.Lat, stopB.Long, currentPosition.latitude, currentPosition.longitude);
-          // console.log("stopA distance:", stopA.distance);
-          // console.log("stopB distance:", stopB.distance);
-          return stopA.distance - stopB.distance;
-        });
-        console.log("stops: ", stops);
+        .then(res => { return res.json() })
+        .then(stops => {
+          // stops = stops.sort((stopA, stopB) => {
+          //   stopA.distance = Utils.getDistanceFromLatLonInKm(stopA.Lat, stopA.Long, currentPosition.latitude, currentPosition.longitude);
+          //   stopB.distance = Utils.getDistanceFromLatLonInKm(stopB.Lat, stopB.Long, currentPosition.latitude, currentPosition.longitude);
+          //   // console.log("stopA distance:", stopA.distance);
+          //   // console.log("stopB distance:", stopB.distance);
+          //   return stopA.distance - stopB.distance;
+          // });
+          console.log("stops: ", stops);
+          let stopFound = false;
+          let i = 0;
+          
 
-        
-      });
+
+          for (let i = 0; i < stops.length; i++) {
+            if(stopFound === true){
+              continue;
+            }
+            const stop = stops[i];
+            console.log("Stop: ", stop);
+            const Sms = stop.Sms;
+            const stopDeparturesUrl = `api/v1/StopDepartures/${Sms}`;
+            fetch(stopDeparturesUrl)
+              .then(res => { return res.json() })
+              .then(stopDeparture => {
+
+                console.log("stopDeparture: " , stopDeparture);
+                const servicesList = stopDeparture.Services.forEach(service => { 
+                  console.log(service);
+                  return service.ServiceId 
+                });
+
+                // console.log("servicesList", servicesList);
+                // if (stopDeparture.ServiceID === route) {
+                //   stopFound = true;
+                //   const trip = data.getCurrentTrip();
+                //   trip.setStartStop = stopDeparture.Name;
+                // };
+              });
+          }
+
+        });
     });
   }
 
@@ -127,7 +157,7 @@ const App = () => {
         <select id="serviceId" onChange={serviceIdChanged}>
 
           {servicesList.map((service, key) => {
-            return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name} ({(service.distance) ? service.distance.toFixed(2) : "Unknown" } km away) </option>)
+            return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name} ({(service.distance) ? service.distance.toFixed(2) : "Unknown"} km away) </option>)
           })}
 
         </select>
@@ -135,7 +165,7 @@ const App = () => {
 
       <button onClick={startTripClicked}>Start Trip</button>
 
-      
+
 
       <button onClick={endTripClicked}>End Trip</button>
     </div>
