@@ -5,15 +5,17 @@ Project completed as part of *Summer of Tech - Create Camp Hackathon 2020 Wellin
 
 ![covidtrackerfortransit on GitHub](docs/Team-Picture.png)
 
-| Position                          | Name            |
-| --------------------------------- | --------------- |
-| Designer / Thinker                | Piyush Sharma   |
-| Coder                             | Gelan Ejeta     |
-| Coder                             | Fai Songprasit  |
-| Coder                             | Cherie Deng     |
-| Coder                             | Gene Culling    |
-| Extra  Designer / Thinker / Coder | Cristi ilagan   |
+| Position                          | Name              |
+| --------------------------------- | ----------------- |
+| Mentor                            | Kimberley Hayward |
+| Designer / Thinker                | Piyush Sharma     |
+| Coder                             | Gelan Ejeta       |
+| Coder                             | Fai Songprasit    |
+| Coder                             | Cherie Deng       |
+| Coder                             | Gene Culling      |
+| Extra  Designer / Thinker / Coder | Cristi ilagan     |
 
+Special thanks to Kimberley Hayward, Jeremy Shipman, and Prae Songprasit
 
 ## Problem
 ### Background
