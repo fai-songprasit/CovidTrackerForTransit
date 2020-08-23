@@ -19,11 +19,16 @@ body {
     width: 30%;
 }
 
-#route1 {
+#route1{
     background-color: #1C66C5;
 }
 
-#btnreset {
+.button-start,
+#btnstart{
+    background-color: #21C51C;
+}
+
+#btnreset{
     background-color: red;
     display:block;
     border: none;
@@ -37,11 +42,16 @@ body {
     cursor: pointer;
 }
 
-#btnViewTrip {
+.button-end,
+#btnstop{
+    background-color: #FF5E33; 
+}
+
+#btnViewTrip{
     background-color: #1C66C5;
 }
 
-#label1 {
+#label1{
     background-color: white;
     display:block;
     border: none;
@@ -53,14 +63,6 @@ body {
     font-size: 30px;
     margin: 4px 2px;
     cursor: pointer;
-}
-
-.button-start, #btnstart{
-    background-color: #21C51C;
-}
-
-.button-end, #btnstop{
-    background-color: #FF5E33; 
 }
 
 .button-route {
