@@ -68,8 +68,32 @@ body {
 .button-route {
     /* display: block making other buttons appear */ 
 }
+.w3-container1{
+    background-color: white;
+    text-align:center;
+    }
+
+#newTrip {
+    background-color: #31FF92;
+    display:block;
+    border: none;
+    color: #FF0808;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+h3{
+    background-color: #6262FA;
+}
 
 .centering{
     display:flex;
     flex-direction: column;
 }
+
+.centering .button{align-self: center}
