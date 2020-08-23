@@ -24,7 +24,7 @@ const App = () => {
     //console.log("Use Effect Trigger!");
     setRoute(routes[0]);
 
-    fetch(`api/v1/${routes[0]}`)
+    fetch(`api/v1/serviceId/${routes[0]}`)
       .then(res => { return res.json() })
       .then(json => {
         console.log("Response found for route");
@@ -41,6 +41,28 @@ const App = () => {
 
     let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
     data.addTrip(trip);
+
+
+    //"https://www.metlink.org.nz/api/v1/StopNearby/currentPosition.latitude/174.76"
+    navigator.geolocation.getCurrentPosition((position) => {
+      const currentPosition = position.coords;
+      //https://www.metlink.org.nz/api/v1/StopNearby/[LAT]/[LONG]
+      const busStopsNearUrl = `api/v1/StopNearby/${currentPosition.latitude}/${currentPosition.longitude}`;
+      fetch(busStopsNearUrl)
+      .then( res => { return res.json()})
+      .then(stops => {
+        stops = stops.sort((stopA, stopB) => {
+          stopA.distance = Utils.getDistanceFromLatLonInKm(stopA.Lat, stopA.Long, currentPosition.latitude, currentPosition.longitude);
+          stopB.distance = Utils.getDistanceFromLatLonInKm(stopB.Lat, stopB.Long, currentPosition.latitude, currentPosition.longitude);
+          // console.log("stopA distance:", stopA.distance);
+          // console.log("stopB distance:", stopB.distance);
+          return stopA.distance - stopB.distance;
+        });
+        console.log("stops: ", stops);
+
+        
+      });
+    });
   }
 
   const endTripClicked = () => {
@@ -53,7 +75,7 @@ const App = () => {
     const route = event.target.value;
     setRoute(route);
 
-    fetch(`api/v1/${route}`)
+    fetch(`api/v1/serviceId/${route}`)
       .then(res => { return res.json() })
       .then(json => {
         const services = json.Services;
@@ -63,8 +85,8 @@ const App = () => {
 
 
   const serviceIdChanged = (event) => {
-    const service = event.target.value;
-    console.log("Service: ", service);
+    const service = JSON.parse(event.target.value);
+    // console.log("Service: ", service);
     setVehicleRef(service.VehicleRef);
   }
 
@@ -75,10 +97,11 @@ const App = () => {
       services = services.sort((serviceA, serviceB) => {
         serviceA.distance = Utils.getDistanceFromLatLonInKm(serviceA.Lat, serviceA.Long, currentPosition.latitude, currentPosition.longitude);
         serviceB.distance = Utils.getDistanceFromLatLonInKm(serviceB.Lat, serviceB.Long, currentPosition.latitude, currentPosition.longitude);
-        console.log("serviceA distance:", serviceA.distance);
-        console.log("serviceB distance:", serviceB.distance);
+        // console.log("serviceA distance:", serviceA.distance);
+        // console.log("serviceB distance:", serviceB.distance);
         return serviceA.distance - serviceB.distance;
       });
+
 
       let vehicleRef = null;
       if (services.length > 0) {
