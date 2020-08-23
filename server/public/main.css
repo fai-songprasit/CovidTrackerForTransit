@@ -65,9 +65,6 @@ body {
     cursor: pointer;
 }
 
-.button-route {
-    /* display: block making other buttons appear */ 
-}
 .w3-container1{
     background-color: white;
     text-align:center;
