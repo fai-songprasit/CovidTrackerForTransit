@@ -26,7 +26,6 @@ const MyTrip = (props) => {
         <>
             <h2>Trip History</h2>
 
-
             {trips.map((trip, key) => {
                 const startDate   = new Date(trip.startTime);
                 const endDate     = new Date(trip.endTime);
