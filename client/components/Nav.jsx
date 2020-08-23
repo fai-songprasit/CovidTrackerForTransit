@@ -17,6 +17,10 @@ return(
       <li className="nav-item">
         <a className="nav-link" href="#/my-trip">My Trips</a>
       </li>
+      <li className="nav-item">
+        <a className="nav-link" href="#/covid-positive">COVID POSITIVE</a>
+      </li>
+
     </ul>
   </div>
 </nav>

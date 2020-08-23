@@ -35,9 +35,15 @@ class Trip {
     }
 
     overlaps(otherTrip) {
-        if (this.route !== otherTrip.route) {
+        // doesn't matter if it's a different route if it's the same vehicle
+        // if (this.route != otherTrip.route) {
+        //     return false;
+        // }
+
+        if (this.vehicleRef != otherTrip.vehicleRef) {
             return false;
         }
+
         if (otherTrip.endTime < this.startTime) {
             return false;
         }
