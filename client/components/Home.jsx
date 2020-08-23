@@ -24,7 +24,7 @@ const App = () => {
     //console.log("Use Effect Trigger!");
     setRoute(routes[0]);
 
-    fetch(`api/v1/${routes[0]}`)
+    fetch(`api/v1/serviceId/${routes[0]}`)
       .then(res => { return res.json() })
       .then(json => {
         // console.log("Response found for route");
@@ -53,7 +53,7 @@ const App = () => {
     const route = event.target.value;
     setRoute(route);
 
-    fetch(`api/v1/${route}`)
+    fetch(`api/v1/serviceId/${route}`)
       .then(res => { return res.json() })
       .then(json => {
         const services = json.Services;
