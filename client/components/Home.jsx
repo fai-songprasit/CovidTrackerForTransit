@@ -13,6 +13,7 @@ const App = () => {
   const [servicesList, setServicesList] = useState([]);
 
 
+
   const routes = ["1", "110", "111", "112", "113", "114", "115", "12",
     "120", "121", "12e", "13", "130", "14", "145", "150", "154", "160", "17",
     "170", "17e", "18", "18e", "19", "19e", "2", "20", "200", "201", "202", "203", "204",
@@ -47,6 +48,7 @@ const App = () => {
 
   const endTripClicked = () => {
     data.endCurrentTrip();
+    location.reload();
   }
 
 
@@ -94,7 +96,7 @@ const App = () => {
   return (
     <div>
       <h1>COVID Tracker For Transit</h1>
-      <select id="routeId" onChange={routeIdChanged}>
+      <label>Route Number:</label><select id="routeId" onChange={routeIdChanged}>
         {routes.map((route, key) => {
           return (
             <option key={key} value={route}>{route}</option>

@@ -5,7 +5,7 @@ import Data from "./../classes/Data";
 const MyTrip = (props) => {
 
     const [data, setData] = useState(Data.load());
-    //console.log(data.trips)
+
     console.log("props.numberOfElements: ", props.numberOfElements);
 
     //Need to bring the data back from local and display this infor here
@@ -21,7 +21,9 @@ const MyTrip = (props) => {
     }
 
     trips = trips.slice(0, maxTrips);
-
+    trips = trips.sort( (tripa, tripb) => {
+        return  tripb.startTime - tripa.startTime;
+    })
     return (
         <>
             <h2>Trip History</h2>
