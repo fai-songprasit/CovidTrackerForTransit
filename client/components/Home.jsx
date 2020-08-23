@@ -113,12 +113,9 @@ const App = () => {
       }
 
       <button onClick={startTripClicked}>Start Trip</button>
-
-      
-
       <button onClick={endTripClicked}>End Trip</button>
 
-      <MyTrip />
+      <MyTrip numberOfElements={5} />
     </div>
   )
 }
