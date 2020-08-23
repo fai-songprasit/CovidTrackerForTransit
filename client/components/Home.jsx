@@ -92,7 +92,8 @@ const App = () => {
   return (
     <div>
       <h1>COVID Tracker For Transit</h1>
-      <select className="button button-route" id="routeId" onChange={routeIdChanged}>
+      <div className="centering"><select className="button button-route" id="routeId" onChange={routeIdChanged}>
+
         {routes.map((route, key) => {
           return (
             <option key={key} value={route}>{route}</option>
@@ -115,6 +116,7 @@ const App = () => {
       
 
       <button className="button button-end" onClick={endTripClicked}>End Trip</button>
+      </div>
     </div>
   )
 }

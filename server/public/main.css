@@ -68,4 +68,10 @@ body { text-align:center }
     cursor: pointer;
     
 }
-.button-route {}    
+.button-route {
+    /* display: block making other buttons appear */ 
+}
+.centering{
+    display:flex;
+    flex-direction: column;
+}
