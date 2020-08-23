@@ -27,18 +27,17 @@ class Data {
 
     static loadDataFromLocalStorage = () => {
         let loadedDataString = window.localStorage.getItem("data");
+        if (loadedDataString === null ){
+                loadedData = {
+                    trips: [],
+                    covidPositive: false    
+                };
+            const data = new Data(loadedData.trips, loadedData.covidPositive);
+            return data;    
+        }
         let loadedDataJson = JSON.parse(loadedDataString);
         let loadedData = Data.loadDataFromJson(loadedDataJson);
-        // console.log("loadedData: ", loadedData);
-        if(loadedData === null){
-            loadedData = {
-                trips: [],
-                covidPositive: false    
-            };
-        }
-        // console.log("loadedData.trips: " , loadedData.trips);
         const data = new Data(loadedData.trips, loadedData.covidPositive);
-        // console.log("Loaded Data: ", loadedData);
         return data;
     }
 
