@@ -58,38 +58,39 @@ const App = () => {
           //   // console.log("stopB distance:", stopB.distance);
           //   return stopA.distance - stopB.distance;
           // });
-          console.log("stops: ", stops);
+          // console.log("stops: ", stops);
           let stopFound = false;
           let i = 0;
-          
+
 
 
           for (let i = 0; i < stops.length; i++) {
-            if(stopFound === true){
+            if (stopFound === true) {
               continue;
             }
             const stop = stops[i];
-            console.log("Stop: ", stop);
+            // console.log("Stop: ", stop);
             const Sms = stop.Sms;
             const stopDeparturesUrl = `api/v1/StopDepartures/${Sms}`;
             fetch(stopDeparturesUrl)
               .then(res => { return res.json() })
               .then(stopDeparture => {
 
-                console.log("stopDeparture: " , stopDeparture);
-                const servicesList = stopDeparture.Services.forEach(service => { 
-                  console.log(service);
-                  return service.ServiceId 
+                // console.log("stopDeparture: " , stopDeparture);
+                const servicesList = stopDeparture.Services.map(service => {
+                  console.log("service : ", service);
+                  console.log("serviceId: ", service.ServiceID);
+                  return service.ServiceID;
                 });
 
-                // console.log("servicesList", servicesList);
+                console.log("servicesList", servicesList);
                 // if (stopDeparture.ServiceID === route) {
-                //   stopFound = true;
-                //   const trip = data.getCurrentTrip();
-                //   trip.setStartStop = stopDeparture.Name;
-                // };
+                stopFound = true;
+                const trip = data.getCurrentTrip();
+                trip.setStartStop = stopDeparture.Name;
               });
-          }
+          };
+
 
         });
     });
