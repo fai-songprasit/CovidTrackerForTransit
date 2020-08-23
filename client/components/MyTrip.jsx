@@ -32,8 +32,8 @@ const MyTrip = (props) => {
                 const endDate     = new Date(trip.endTime);
                 const displayDate = `${startDate.getDate()}/${startDate.getMonth() +1 }/${startDate.getFullYear()}` ;
 
-                const displayStartTime = `${startDate.getHours()}:${startDate.getMinutes() }` ;
-                const displayEndTime = `${endDate.getHours()}:${endDate.getMinutes() }`;
+                const displayStartTime = `${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, 0) }` ;
+                const displayEndTime = `${endDate.getHours()}:${ endDate.getMinutes().toString().padStart(2, 0) }`;
 
                 return (
                     <div key={key}>
