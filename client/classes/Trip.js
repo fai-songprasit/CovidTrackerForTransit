@@ -18,6 +18,7 @@ class Trip {
     }
 
     setEndTime(endTime) {
+        console.log("Set end time :", endTime );
         this.endTime = endTime;
     }
 

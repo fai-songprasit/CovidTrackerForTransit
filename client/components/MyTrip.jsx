@@ -1,11 +1,10 @@
 import React, { useState } from "react"
 
 import Data from "./../classes/Data";
-import Trip from "./Trip";
+import TripElement from "./TripElement";
 const MyTrips = (props) => {
 
-    const [data, setData] = useState(Data.load());
-    //console.log(data.trips)
+    const [data, setData] = useState( (props.data != null) ? props.data : Data.load());
     console.log("props.numberOfElements: ", props.numberOfElements);
 
     //Need to bring the data back from local and display this infor here
@@ -20,10 +19,10 @@ const MyTrips = (props) => {
         }
     }
 
-    trips = trips.slice(0, maxTrips);
     trips = trips.sort((tripA, tripB) => {
         return tripB.startTime - tripA.startTime;
     });
+    trips = trips.slice(0, maxTrips);
 
     return (
         <div className="container">
@@ -33,7 +32,7 @@ const MyTrips = (props) => {
                
                 return (
                     <div key={key} >
-                        <Trip trip={trip}/>
+                        <TripElement trip={trip}/>
                         <br />
                     </div>
                 )

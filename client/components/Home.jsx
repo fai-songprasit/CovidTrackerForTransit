@@ -5,12 +5,15 @@ import MyTrips from "./MyTrip.jsx";
 import Trip from "./../classes/Trip";
 import Data from "./../classes/Data";
 import Utils from "./../classes/Utils";
+import TripElement from "./TripElement.jsx";
 
 const App = () => {
   const [route, setRoute] = useState({});
   const [data, setData] = useState(Data.load());
   const [vehicleRef, setVehicleRef] = useState();
   const [servicesList, setServicesList] = useState([]);
+  const [currentTrip, setCurrentTrip] = useState(data.getCurrentTrip());
+
 
   const routes = ["1", "110", "111", "112", "113", "114", "115", "12",
     "120", "121", "12e", "13", "130", "14", "145", "150", "154", "160", "17",
@@ -40,11 +43,13 @@ const App = () => {
 
     let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
     data.addTrip(trip);
+    setCurrentTrip(data.getCurrentTrip());
   }
 
   const endTripClicked = () => {
+    currentTrip.setEndTime(Date.now());
     data.endCurrentTrip();
-    location.reload();
+    setCurrentTrip(null);
   }
 
   const routeIdChanged = (event) => {
@@ -91,7 +96,6 @@ const App = () => {
       <h1>COVID Tracker For Transit</h1>
       <div className="row">
         <label className="col-3">Route</label>
-        {/* <div className="centering col-6"> */}
         <select className="button button-route col-9" id="routeId" onChange={routeIdChanged}>
           {routes.map((route, key) => {
             return (
@@ -99,8 +103,8 @@ const App = () => {
             )
           })}
         </select>
-        {/* </div> */}
       </div>
+      <br />
 
       <div className="row">
         {route != null && servicesList.length > 0 &&
@@ -115,14 +119,23 @@ const App = () => {
       </div>
       <br />
       <div className="row">
-        <button type="button" className="button button-start btn-primary btn-block" onClick={startTripClicked}>Start Trip</button>
-
-        <button type="button" className="button button-end btn-primary btn-block" onClick={endTripClicked}>End Trip</button>
+        {(data.getCurrentTrip() === null) ?
+          <button type="button" className="button button-start btn-primary btn-block" onClick={startTripClicked}>Start Trip</button> :
+          <div className="col s10">
+            <div className="row">
+              <label>Current Trip</label>
+            </div>
+            <div className="row">
+              <TripElement trip={currentTrip} />
+            </div>
+            <button type="button" className="button button-end btn-primary btn-block" onClick={endTripClicked}>End Trip</button>
+          </div>
+        }
       </div>
       <br />
       <br />
 
-      <MyTrips />
+      <MyTrips numberOfElements={3} data={data} />
 
     </div>
 

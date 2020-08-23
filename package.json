@@ -39,7 +39,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "superagent": "^5.2.2",
-    "webpack": "^4.43.0"
+    "webpack": "^4.44.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

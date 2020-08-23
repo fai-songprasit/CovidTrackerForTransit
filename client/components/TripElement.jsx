@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 
-const Trip = (props) => {
+const TripElement = (props) => {
 
     const trip = props.trip;
     const startDate   = new Date(trip.startTime);
@@ -9,7 +9,7 @@ const Trip = (props) => {
     const displayDate = `${startDate.getDate()}/${startDate.getMonth() +1 }/${startDate.getFullYear()}` ;
 
     const displayStartTime = `${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, 0) }` ;
-    const displayEndTime = `${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, 0) }`;
+    const displayEndTime = (trip.endTime !== null) ? `${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, 0) }` : "Trip Not Yet Complete";
     
     return (
         <div>
@@ -31,4 +31,4 @@ const Trip = (props) => {
         </div>)
 }
 
-export default Trip;
+export default TripElement;
