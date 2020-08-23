@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import Data from "./../classes/Data";
-import Trip from "../classes/Trip";
-import ProgramModeEnum from "./../classes/ProgramModeEnum";
 
+import {Data, ProgramModeEnum} from "./../classes";
 
 
 import socketIoClient from 'socket.io-client';

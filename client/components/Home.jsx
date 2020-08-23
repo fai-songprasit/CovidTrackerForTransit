@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react"
 
-import MyTrips from "./MyTrip.jsx";
+import {Data, Trip, Utils} from "./../classes";
 
-import Trip from "./../classes/Trip";
-import Data from "./../classes/Data";
-import Utils from "./../classes/Utils";
+import MyTripContainer from "./MyTripContainer.jsx";
 import TripElement from "./TripElement.jsx";
 
 const App = () => {
@@ -135,7 +133,7 @@ const App = () => {
       <br />
       <br />
 
-      <MyTrips numberOfElements={3} data={data} />
+      <MyTripContainer numberOfElements={3} data={data} />
 
     </div>
 

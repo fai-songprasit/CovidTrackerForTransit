@@ -1,4 +1,4 @@
-import Trip from "./Trip";
+import {Trip} from "../";
 
 class Data {
     constructor(trips = [], covidPositive = false) {

@@ -1,4 +1,3 @@
-
 class Trip {
     constructor(route, startTime, endTime = Trip.getDefaultEndTime(startTime), vehicleRef, startStop = null, endStop = null) {
         this.startTime = startTime;

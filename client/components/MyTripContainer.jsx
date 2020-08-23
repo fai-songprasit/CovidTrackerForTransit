@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 
-import Data from "./../classes/Data";
+import {Data} from "../classes";
+
 import TripElement from "./TripElement";
-const MyTrips = (props) => {
+const MyTripContainer = (props) => {
 
     const [data, setData] = useState( (props.data != null) ? props.data : Data.load());
     console.log("props.numberOfElements: ", props.numberOfElements);
@@ -41,4 +42,4 @@ const MyTrips = (props) => {
     )
 }
 
-export default MyTrips
+export default MyTripContainer

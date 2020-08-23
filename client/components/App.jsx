@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react"
 import { HashRouter as Router, Route } from 'react-router-dom'
 import socketIoClient from 'socket.io-client';
 
-import Data from "./../classes/Data";
-import Trip from "./../classes/Trip";
+import {Data, Trip} from "./../classes";
 
 import Home from "./Home.jsx"
-import MyTrip from "./MyTrip.jsx";
+import MyTripContainer from "./MyTripContainer.jsx";
 import Nav from "./Nav.jsx";
 import CovidPositiveBroadcast from "./CovidPositiveBroadcast.jsx";
 import CovidPositiveModal from "./CovidPositiveModal.jsx";
@@ -51,7 +50,7 @@ const App = () => {
     <Router>
       <Nav />
       <Route exact path="/" component={Home} />
-      <Route exact path="/my-trip" component={MyTrip} />
+      <Route exact path="/my-trip" component={MyTripContainer} />
       <Route exact path="/covid-positive" component={CovidPositiveBroadcast} />
       <CovidPositiveModal />
     </Router>
