@@ -104,7 +104,7 @@ const App = () => {
       </select>
 
       {route != null && servicesList.length > 0 &&
-        <select id="serviceId" onChange={serviceIdChanged}>
+        <select className="button" id="serviceId" onChange={serviceIdChanged}>
 
           {servicesList.map((service, key) => {
             return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name} ({(service.distance) ? service.distance.toFixed(2) : "Unknown" } km away) </option>)
