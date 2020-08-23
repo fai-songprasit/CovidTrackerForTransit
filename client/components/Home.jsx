@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 
+import MyTrip from "./MyTrip.jsx";
+
 import Trip from "./../classes/Trip";
 import Data from "./../classes/Data";
 import Utils from "./../classes/Utils";
@@ -111,10 +113,9 @@ const App = () => {
       }
 
       <button onClick={startTripClicked}>Start Trip</button>
-
-      
-
       <button onClick={endTripClicked}>End Trip</button>
+
+      <MyTrip numberOfElements={5} />
     </div>
   )
 }
