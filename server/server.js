@@ -22,7 +22,6 @@ io.on("connection", function(socket){
     //On new state broadcast
     socket.on("new state", function(data){
         // console.log("New State - server.js - line 24");
-        // console.log(data);
         io.sockets.emit("new state", data);
     });
 

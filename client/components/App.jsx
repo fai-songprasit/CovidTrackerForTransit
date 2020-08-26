@@ -30,7 +30,8 @@ const App = () => {
       if (trip instanceof Trip !== true) {
         trip = new Trip(trip.route, trip.startTime, trip.endTime, trip.vehicleRef);
       }
-
+      console.log("trip:", trip);
+      console.log("trips:", data.trips);
       const overlappingTrips = getOverlappingTrips(trip);
       if (overlappingTrips.length > 0) {
         $('#positiveCovidModal').modal({ show: true });
@@ -43,7 +44,7 @@ const App = () => {
 
   const getOverlappingTrips = (tripA) => {
     const myTrips = data.trips;
-    const filteredTrips = myTrips.filter(trip => trip.overlaps(tripA));
+    const filteredTrips = myTrips.filter(trip => {if(trip.overlaps(tripA) || tripA.overlaps(trip)){return true}});
     return filteredTrips;
   }
 
