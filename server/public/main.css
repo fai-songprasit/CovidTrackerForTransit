@@ -1,9 +1,9 @@
-body { 
+/* body { 
     text-align: center; 
 }
 
 .button {
-    background-color: #8981D1; /* Green */
+    background-color: #8981D1; 
     display:block;
     border: none;
     color: black;
@@ -91,6 +91,4 @@ h3{
 .centering{
     display:flex;
     flex-direction: column;
-}
-
-.centering .button{align-self: center}
+} */

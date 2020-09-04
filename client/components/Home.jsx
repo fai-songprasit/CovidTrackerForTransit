@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react"
 
-import MyTrip from "./MyTrip.jsx";
+import {Data, Trip, Utils} from "./../classes";
 
-import Trip from "./../classes/Trip";
-import Data from "./../classes/Data";
-import Utils from "./../classes/Utils";
+import MyTripContainer from "./MyTripContainer.jsx";
+import TripElement from "./TripElement.jsx";
 
 const App = () => {
   const [route, setRoute] = useState({});
   const [data, setData] = useState(Data.load());
   const [vehicleRef, setVehicleRef] = useState();
   const [servicesList, setServicesList] = useState([]);
+  const [currentTrip, setCurrentTrip] = useState(data.getCurrentTrip());
+
 
   const routes = ["1", "110", "111", "112", "113", "114", "115", "12",
     "120", "121", "12e", "13", "130", "14", "145", "150", "154", "160", "17",
@@ -40,10 +41,13 @@ const App = () => {
 
     let trip = new Trip(route, startTime, Trip.getDefaultEndTime(startTime), vehicleRef);
     data.addTrip(trip);
+    setCurrentTrip(data.getCurrentTrip());
   }
 
   const endTripClicked = () => {
+    currentTrip.setEndTime(Date.now());
     data.endCurrentTrip();
+    setCurrentTrip(null);
   }
 
   const routeIdChanged = (event) => {
@@ -86,33 +90,53 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>COVID Tracker For Transit</h1>
-      <div className="centering"><select className="button button-route" id="routeId" onChange={routeIdChanged}>
-
-        {routes.map((route, key) => {
-          return (
-            <option key={key} value={route}>{route}</option>
-          )
-        })}
-      </select>
-
-      {route != null && servicesList.length > 0 &&
-        <select className="button" id="serviceId" onChange={serviceIdChanged}>
-
-          {servicesList.map((service, key) => {
-            return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name} ({(service.distance) ? service.distance.toFixed(2) : "Unknown" } km away) </option>)
+      <div className="row">
+        <label className="col-3">Route</label>
+        <select className="button button-route col-9" id="routeId" onChange={routeIdChanged}>
+          {routes.map((route, key) => {
+            return (
+              <option key={key} value={route}>{route}</option>
+            )
           })}
-
         </select>
-      }
-
-      <button className="button button-start" onClick={startTripClicked}>Start Trip</button>
-
-      <button className="button button-end" onClick={endTripClicked}>End Trip</button>
-      <MyTrip/>
       </div>
+      <br />
+
+      <div className="row">
+        {route != null && servicesList.length > 0 &&
+          <select id="serviceId" className="col-12" onChange={serviceIdChanged}>
+
+            {servicesList.map((service, key) => {
+              return (<option key={key} value={JSON.stringify(service)}>{service.Service.Name.substr(0, 16)}... ({(service.distance) ? service.distance.toFixed(2) : "Unknown"} km away) </option>)
+            })}
+
+          </select>
+        }
+      </div>
+      <br />
+      <div className="row">
+        {(data.getCurrentTrip() === null) ?
+          <button type="button" className="button button-start btn-primary btn-block" onClick={startTripClicked}>Start Trip</button> :
+          <div className="col s10">
+            <div className="row">
+              <label>Current Trip</label>
+            </div>
+            <div className="row">
+              <TripElement trip={currentTrip} />
+            </div>
+            <button type="button" className="button button-end btn-primary btn-block" onClick={endTripClicked}>End Trip</button>
+          </div>
+        }
+      </div>
+      <br />
+      <br />
+
+      <MyTripContainer numberOfElements={3} data={data} />
+
     </div>
+
   )
 }
 

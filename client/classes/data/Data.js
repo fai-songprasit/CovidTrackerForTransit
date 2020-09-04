@@ -1,4 +1,4 @@
-import Trip from "./Trip";
+import {Trip} from "../";
 
 class Data {
     constructor(trips = [], covidPositive = false) {
@@ -33,7 +33,7 @@ class Data {
                     covidPositive: false    
                 };
             const data = new Data(loadedData.trips, loadedData.covidPositive);
-            return data;    
+            return data;
         }
         let loadedDataJson = JSON.parse(loadedDataString);
         let loadedData = Data.loadDataFromJson(loadedDataJson);
@@ -70,29 +70,36 @@ class Data {
     }
 
     getCurrentTrip = () => {
+        console.log("Get current trip hit!" );
+        if(this.trips.length === 0){
+            return null;
+        }
         const currentTrip = this.trips[this.trips.length - 1];
+
         if (currentTrip instanceof Trip !== true) {
             currentTrip = new Trip(currentTrip.route, currentTrip.startTime, currentTrip.endTime);
         }
-    
-        // console.log("Get current trip - currentTrip: ", currentTrip);
+        // console.log("Trips: ", this.trips);
+        console.log("Get current trip - currentTrip: ", currentTrip);
+        
         if (currentTrip.getEndTime() === Trip.getDefaultEndTime(currentTrip.startTime)) {
+            console.log("currentTrip.getEndTime() === Trip.getDefaultEndTime(currentTrip.startTime) Hit!");
             return currentTrip;
+            // return null;
         }
         return null;
     }
 
     endCurrentTrip = () => {
-        // console.log("End current trip hit!");
-        let currentTrip = this.getCurrentTrip();
+        console.log("End current trip hit!");
+        // let currentTrip = this.getCurrentTrip();
         // console.log("currentTrip: ", currentTrip);
-        if(currentTrip === null){
-            // console.error("There is no current trip, unable to end current trip");
-            return;
-        }
+        // if(currentTrip === null){
+        //     console.error("There is no current trip, unable to end current trip");
+        //     return;
+        // }
 
-        currentTrip.setEndTime(Date.now());
-        // console.log("currentTrip: ", currentTrip);
+        // currentTrip.setEndTime(Date.now());
         this.save();
     }
 }
