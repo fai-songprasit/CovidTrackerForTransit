@@ -43,7 +43,7 @@ const App = () => {
 
   const getOverlappingTrips = (tripA) => {
     const myTrips = data.trips;
-    const filteredTrips = myTrips.filter(trip => trip.overlaps(tripA));
+    const filteredTrips = myTrips.filter(trip => {if(trip.overlaps(tripA) || tripA.overlaps(trip)){return true}});
     return filteredTrips;
   }
 
