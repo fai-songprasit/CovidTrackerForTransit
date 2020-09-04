@@ -134,9 +134,7 @@ const App = () => {
       <br />
 
       <MyTripContainer numberOfElements={3} data={data} />
-
     </div>
-
   )
 }
 

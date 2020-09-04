@@ -28,9 +28,7 @@ const MyTripContainer = (props) => {
     return (
         <div className="container">
             <h2>Trip History</h2>
-
             {trips.map((trip, key) => {
-               
                 return (
                     <div key={key} >
                         <TripElement trip={trip}/>
